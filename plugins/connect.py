@@ -1,7 +1,3 @@
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
 from info import *
 from utils import *
 from plugins.generate import database
@@ -27,7 +23,7 @@ async def connect(bot, message):
     if message.from_user.id!=user_id:
        return await m.edit(f"<b>Only {user_name} can use this command</b> 😁")
     if bool(verified)==False:
-       return await m.edit("💢 <b>This chat is not verified!\n⭕ use /verify</b>")    
+       return await m.edit("💢 <b>This chat is Not Verified!\n⭕ use /verify</b>")    
     try:
        channel = int(message.command[-1])
        if channel in channels:
