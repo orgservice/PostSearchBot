@@ -32,7 +32,7 @@ async def search(bot, message):
     channels = (await get_group(message.chat.id))["channels"]
     if bool(channels)==False:
        return     
-    if message.text.startswith("/", "#"):
+    if message.text.startswith('/', '#'):
        return    
     query   = message.text 
     head    = f"<b><u>⭕ Here is the results 👇</u></b>\n\n<blockquote><b>💢 Powered By @ORGPrime ❗</b></blockquote>\n\n"
