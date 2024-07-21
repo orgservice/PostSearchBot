@@ -32,7 +32,7 @@ async def search(bot, message):
     channels = (await get_group(message.chat.id))["channels"]
     if bool(channels)==False:
        return     
-    if message.text.startswith("/"):
+    if message.text.startswith("/", "#"):
        return    
     query   = message.text 
     head    = f"<b><u>⭕ Here is the results 👇</u></b>\n\n<blockquote><b>💢 Powered By @ORGPrime ❗</b></blockquote>\n\n"
@@ -50,12 +50,14 @@ async def search(bot, message):
           for movie in movies: 
               buttons.append([InlineKeyboardButton(movie['title'], callback_data=f"recheck_{movie['id']}")])
           msg = await message.reply_photo(photo="https://graph.org/file/e06089d66b2b556816e3d.jpg",
-                                          caption="<b><I>🔻 I Couldn't find anything related to Your Query 😕.\n🔺 Did you mean any of these?</I></b>", 
+                                          caption="<b><I>🔻 I Couldn't find anything related to Your Query 😕\n\n🔺 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
+           await asyncio.sleep(300)
+           await msg.delete()
        else:
-          await send_message_in_chunks(bot, message.chat.id, head+results)
+           await send_message_in_chunks(bot, message.chat.id, head+results)
     except:
-       pass
+        pass
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
@@ -86,7 +88,7 @@ async def recheck(bot, update):
                   continue 
                results += f"<b><I>♻️🍿 {name}</I></b>\n\n🔗 {msg.link}</I></b>\n\n"
        if bool(results)==False:          
-          return await update.message.edit("🔺 Still No Results found! Please Request To Group Admin 🔻", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎯 Request To Admin 🎯", callback_data=f"request_{id}")]]))
+          return await update.message.edit("<b>ᴍᴏᴠɪᴇ ɴᴏᴛ ꜰᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀꜱᴇ...\n\nʀᴇᴀsᴏɴ :-\n1) ᴏ.ᴛ.ᴛ ᴏʀ ᴅᴠᴅ ɴᴏᴛ ʀᴇʟᴇᴀsᴇᴅ\n2) ɴᴏᴛ ᴜᴘʟᴏᴀᴅᴇᴅ ʏᴇᴛ\n3) Sᴘᴇʟʟɪɴɢ Mɪꜱᴛᴀᴋᴇ\n\nᴘʟᴇᴀꜱᴇ reqυeѕт тo ɢroυp ᴀᴅᴍɪɴ🔻</b>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎯 Request To Admin 🎯", callback_data=f"request_{id}")]]))
        await send_message_in_chunks(bot, update.message.chat.id, head+results)
     except Exception as e:
        await update.message.edit(f"❌ Error: `{e}`")
