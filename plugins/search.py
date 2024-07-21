@@ -10,7 +10,7 @@ async def send_message_in_chunks(client, chat_id, text):
     max_length = 4096  # Maximum length of a message
     for i in range(0, len(text), max_length):
         msg = await client.send_message(chat_id=chat_id, text=text[i:i+max_length])
-        asyncio.create_task(delete_after_delay(msg, 1800))
+        asyncio.create_task(delete_after_delay(msg, 300))
 
 async def delete_after_delay(message: Message, delay):
     await asyncio.sleep(delay)
@@ -52,8 +52,6 @@ async def search(bot, message):
           msg = await message.reply_photo(photo="https://graph.org/file/e06089d66b2b556816e3d.jpg",
                                           caption="<b><I>🔻 I Couldn't find anything related to Your Query 😕\n\n🔺 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
-           await asyncio.sleep(300)
-           await msg.delete()
        else:
            await send_message_in_chunks(bot, message.chat.id, head+results)
     except:
