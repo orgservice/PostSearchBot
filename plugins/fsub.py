@@ -1,7 +1,3 @@
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
 from info import *
 from utils import *
 from pyrogram import Client, filters
@@ -31,7 +27,7 @@ async def f_sub_cmd(bot, message):
        c_link = chat.invite_link
        g_link = group.invite_link       
     except Exception as e:
-       text = f"❌ <b>Error:</b> `{str(e)}`\n\n<b>Make sure I'm admin in that channel & this group with all permissions</b>"
+       text = f"❌ <b>Error:</b> `{str(e)}`\n\n<b>Make Sure I'm Admin in that channel & this group with All Aermissions</b>"
        return await m.edit(text)
     await update_group(message.chat.id, {"f_sub":f_sub})
     await m.edit(f"✅ <b>Successfully Attached ForceSub to [{chat.title}]({c_link})!</b>", disable_web_page_preview=True)
@@ -61,14 +57,14 @@ async def nf_sub_cmd(bot, message):
        c_link = chat.invite_link
        g_link = group.invite_link       
     except Exception as e:
-       text = f"❌ <b>Error:</b> `{str(e)}`\n\n<b>Make sure I'm admin in that channel & this group with all permissions</b>"
+       text = f"❌ <b>Error:</b> `{str(e)}`\n\n<b>Make sure I'm admin in that channel & this group with all Permissions</b>"
        return await m.edit(text)
     await update_group(message.chat.id, {"f_sub":False})
     await m.edit(f"✅ <b>Successfully removed FSub from [{chat.title}]({c_link})!</b>", disable_web_page_preview=True)
     text = f"#RemoveFsub\n\nUser: {message.from_user.mention}\nGroup: [{group.title}]({g_link})\nChannel: [{chat.title}]({c_link})"
     await bot.send_message(chat_id=LOG_CHANNEL, text=text)
 
-       
+
 @Client.on_callback_query(filters.regex(r"^checksub"))
 async def f_sub_callback(bot, update):
     user_id = int(update.data.split("_")[-1])
