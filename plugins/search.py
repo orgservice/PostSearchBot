@@ -60,6 +60,8 @@ async def search(bot, message):
            await asyncio.sleep(30)
            await msg.delete()
            return
+    except:
+        pass
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
