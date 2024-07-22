@@ -84,7 +84,7 @@ async def recheck(bot, update):
                name = (msg.text or msg.caption).split("\n")[0]
                if name in results:
                   continue 
-               results += f"<b><I>♻️🍿 {name}</I></b>\n\n🔗 {msg.link}</I></b>\n\n"
+               results += f"<b><I>♻️🍿 {name}\n\n🔗 {msg.link}</I></b>\n\n"
        if bool(results)==False:          
           return await update.message.edit("<b>ᴍᴏᴠɪᴇ ɴᴏᴛ ꜰᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀꜱᴇ...\n\nʀᴇᴀsᴏɴ :-\n1) ᴏ.ᴛ.ᴛ ᴏʀ ᴅᴠᴅ ɴᴏᴛ ʀᴇʟᴇᴀsᴇᴅ\n2) ɴᴏᴛ ᴜᴘʟᴏᴀᴅᴇᴅ ʏᴇᴛ\n3) Sᴘᴇʟʟɪɴɢ Mɪꜱᴛᴀᴋᴇ\n\nᴘʟᴇᴀꜱᴇ reqυeѕт тo ɢroυp ᴀᴅᴍɪɴ🔻</b>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎯 Request To Admin 🎯", callback_data=f"request_{id}")]]))
        await send_message_in_chunks(bot, update.message.chat.id, head+results)
