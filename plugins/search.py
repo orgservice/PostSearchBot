@@ -57,8 +57,7 @@ async def search(bot, message):
        else:
            await send_message_in_chunks(bot, message.chat.id, head+results)
     await msg.message.delete(60)
-    except:
-        pass
+    return
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
@@ -94,6 +93,7 @@ async def recheck(bot, update):
     except Exception as e:
        await update.message.edit(f"❌ Error: `{e}`")
     await update.message.delete(60)
+    await m.delete(60)
     
 @Client.on_callback_query(filters.regex(r"^request"))
 async def request(bot, update):
