@@ -12,11 +12,10 @@ async def send_message_in_chunks(client, chat_id, text):
         msg = await client.send_message(chat_id=chat_id, text=text[i:i+max_length])
         asyncio.create_task(delete_after_delay(msg, 300))
 
-async def delete_after_delay(message: msg, Message, delay):
+async def delete_after_delay(message: Message, delay):
     await asyncio.sleep(delay)
     try:
         await message.delete()
-        await msg.delete()
     except:
         pass
 
@@ -57,6 +56,7 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
            await send_message_in_chunks(bot, message.chat.id, head+results)
+    await msg.message.delete(60)
     except:
         pass
 
@@ -93,8 +93,8 @@ async def recheck(bot, update):
        await send_message_in_chunks(bot, update.message.chat.id, head+results)
     except Exception as e:
        await update.message.edit(f"❌ Error: `{e}`")
-       await update.message.delete(120)
-
+    await update.message.delete(60)
+    
 @Client.on_callback_query(filters.regex(r"^request"))
 async def request(bot, update):
     clicked = update.from_user.id
