@@ -18,7 +18,14 @@ async def delete_after_delay(message: Message, delay):
         await message.delete()
     except:
         pass
-
+        
+async def delete_after_delay(msg: Message, delay):
+    await asyncio.sleep(delay)
+    try:
+        await message.delete()
+    except:
+        pass
+        
 @Client.on_message(filters.text & filters.group & filters.incoming & ~filters.command(["verify", "connect", "id"]))
 async def search(bot, message):
     vj = database.find_one({"chat_id": ADMIN})
@@ -56,11 +63,8 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
           await send_message_in_chunks(bot, message.chat.id, head+results)
-          await asyncio.sleep(30)
-          await msg.delete()
-           return
     except:
-        pass
+       return await message.delete(60)
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
@@ -77,9 +81,8 @@ async def recheck(bot, update):
     if clicked != typed:
        return await update.answer("That's not for you! 👀", show_alert=True)
 
-    m=await update.message.edit("**Searching..💥**")
-    await asyncio.sleep(60)
-    await m.delete()
+    m = await update.message.edit("**Searching..💥**")
+    await m.delete(60)
     id      = update.data.split("_")[-1]
     query   = await search_imdb(id)
     channels = (await get_group(update.message.chat.id))["channels"]
@@ -95,7 +98,7 @@ async def recheck(bot, update):
        if bool(results)==False:          
           return await update.message.edit("<b>ᴍᴏᴠɪᴇ ɴᴏᴛ ꜰᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀꜱᴇ...\n\nʀᴇᴀsᴏɴ :-\n1) ᴏ.ᴛ.ᴛ ᴏʀ ᴅᴠᴅ ɴᴏᴛ ʀᴇʟᴇᴀsᴇᴅ\n2) ɴᴏᴛ ᴜᴘʟᴏᴀᴅᴇᴅ ʏᴇᴛ\n3) Sᴘᴇʟʟɪɴɢ Mɪꜱᴛᴀᴋᴇ\n\nᴘʟᴇᴀꜱᴇ reqυeѕт тo ɢroυp ᴀᴅᴍɪɴ🔻</b>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎯 Request To Admin 🎯", callback_data=f"request_{id}")]]))
            await send_message_in_chunks(bot, update.message.chat.id, head+results)
-           await update.message.delete(60)
+           await message.delete(60)
     except Exception as e:
        await update.message.edit(f"❌ Error: `{e}`")
 
