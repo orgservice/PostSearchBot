@@ -56,7 +56,10 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
            await send_message_in_chunks(bot, message.chat.id, head+results)
-    await msg.message.delete(60)
+    except:
+        pass
+    return await asyncio.sleep(60)
+    await msg.message.delete()
     return
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
