@@ -53,14 +53,12 @@ async def search(bot, message):
               buttons.append([InlineKeyboardButton(movie['title'], callback_data=f"recheck_{movie['id']}")])
           msg = await message.reply_photo(photo="https://graph.org/file/e06089d66b2b556816e3d.jpg",
                                           caption="<b><I>🔺 I Couldn't find anything related to Your Query 😕\n\n🔻 Did you mean any of these?</I></b>", 
-                                          reply_markup=InlineKeyboardMarkup(buttons))
-       else:
+                                          reply_markup=InlineKeyboardMarkup(buttons)
+                                         )
            await send_message_in_chunks(bot, message.chat.id, head+results)
-    except:
-        pass
-    return await asyncio.sleep(60)
-    await msg.message.delete()
-    return
+           await asyncio.sleep(30)
+           await msg.delete()
+           return
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
