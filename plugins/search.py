@@ -81,8 +81,7 @@ async def recheck(bot, update):
     if clicked != typed:
        return await update.answer("That's not for you! 👀", show_alert=True)
 
-    m = await update.message.edit("**Searching..💥**")
-    await m.delete(60)
+    m=await update.message.edit("**Searching..💥**")
     id      = update.data.split("_")[-1]
     query   = await search_imdb(id)
     channels = (await get_group(update.message.chat.id))["channels"]
