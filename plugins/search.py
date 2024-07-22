@@ -64,7 +64,7 @@ async def search(bot, message):
        else:
           await send_message_in_chunks(bot, message.chat.id, head+results)
     except:
-       return await msg.delete(60)
+       pass
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
