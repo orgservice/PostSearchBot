@@ -56,9 +56,9 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
            await send_message_in_chunks(bot, message.chat.id, head+results)
-           try:
            await asyncio.sleep(120)
-           await msg.delete()
+           try:
+               await msg.delete()
     except:
         pass
 
