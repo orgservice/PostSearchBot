@@ -98,7 +98,6 @@ async def recheck(bot, update):
        if bool(results)==False:          
           return await update.message.edit("<b>ᴍᴏᴠɪᴇ ɴᴏᴛ ꜰᴏᴜɴᴅ ɪɴ ᴅᴀᴛᴀʙᴀꜱᴇ...\n\nʀᴇᴀsᴏɴ :-\n1) ᴏ.ᴛ.ᴛ ᴏʀ ᴅᴠᴅ ɴᴏᴛ ʀᴇʟᴇᴀsᴇᴅ\n2) ɴᴏᴛ ᴜᴘʟᴏᴀᴅᴇᴅ ʏᴇᴛ\n3) Sᴘᴇʟʟɪɴɢ Mɪꜱᴛᴀᴋᴇ\n\nᴘʟᴇᴀꜱᴇ reqυeѕт тo ɢroυp ᴀᴅᴍɪɴ🔻</b>", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🎯 Request To Admin 🎯", callback_data=f"request_{id}")]]))
        await send_message_in_chunks(bot, update.message.chat.id, head+results)
-        await message.delete(60)
     except Exception as e:
         await update.message.edit(f"❌ Error: `{e}`")
 
