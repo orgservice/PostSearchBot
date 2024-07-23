@@ -54,14 +54,15 @@ async def search(bot, message):
           msg = await message.reply_photo(photo="https://graph.org/file/e06089d66b2b556816e3d.jpg",
                                           caption="<b><I>🔺 I Couldn't find anything related to Your Query 😕\n\n🔻 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
-       else:
-           try:
-               mssg = await send_message_in_chunks(bot, message.chat.id, head+results)
-               await asyncio.sleep(120)
-               await send_message_in_chunks.delete()
-               return await mssg.delete()
-               except:
-                   pass
+    else:
+       mssg = await send_message_in_chunks(bot, message.chat.id, head+results)
+       await asyncio.sleep(120)
+       try:
+           await asyncio.sleep(120)
+           await send_message_in_chunks.delete()
+           return await mssg.delete()
+    except:
+        pass
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
