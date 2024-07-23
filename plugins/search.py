@@ -58,7 +58,7 @@ async def search(bot, message):
           msg = await message.reply_text(text=head+results, disable_web_page_preview=True)
           asyncio.create_task(delete_after_delay(msg, 60))
 
-async def delete_after_delay(message: Message, delay):
+async def delete_after_delay(message: msg, delay):
     await asyncio.sleep(delay)
     try:
         await message.delete()
