@@ -55,13 +55,11 @@ async def search(bot, message):
                                           caption="<b><I>🔺 I Couldn't find anything related to Your Query 😕\n\n🔻 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
-          mssg = await send_message_in_chunks(bot, message.chat.id, head+results)
-          await asyncio.sleep(120)
-          await asyncio.sleep(120)
-          await send_message_in_chunks.delete()
-          await mssg.delete()
+          msg = await message.reply_text(text=head+results, disable_web_page_preview=True)
+       _time = (int(time()) + (15*60))
+       await save_dlt_message(msg, _time)
     except:
-        pass
+       pass
 
 @Client.on_callback_query(filters.regex(r"^recheck"))
 async def recheck(bot, update):
@@ -84,6 +82,7 @@ async def recheck(bot, update):
     channels = (await get_group(update.message.chat.id))["channels"]
     head    = "<b><u>⭕ I Have Searched Movie With Wrong Spelling But Take Care Next Time 😐</u>\n\n<blockquote>💢 Powered By @ORGPrime ❗</b></blockquote>\n\n"
     results = ""
+    await update.message.delete()
     try:
        for channel in channels:
            async for msg in User.search_messages(chat_id=channel, query=query):
