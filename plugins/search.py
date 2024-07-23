@@ -54,7 +54,7 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
           msg = await send_message_in_chunks(bot, message.chat.id, head+results)
-       _time = (int(time()) + (15*60))
+       _time = (int(time()) + (2*60))
        await save_dlt_message(msg, _time)
     except:
        pass
