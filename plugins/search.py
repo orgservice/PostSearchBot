@@ -55,9 +55,12 @@ async def search(bot, message):
                                           caption="<b><I>🔺 I Couldn't find anything related to Your Query 😕\n\n🔻 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
-          msg = await send_message_in_chunks(bot, message.chat.id, head+results)
-          await asyncio.sleep(120)
-          await msg.delete()
+           try:
+               mssg = await send_message_in_chunks(bot, message.chat.id, head+results)
+               await asyncio.sleep(120)
+               await send_message_in_chunks.delete()
+               await mssg.delete()
+               return
     except:
        pass
 
