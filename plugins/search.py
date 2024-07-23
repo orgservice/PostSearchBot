@@ -57,10 +57,9 @@ async def search(bot, message):
        else:
           mssg = await send_message_in_chunks(bot, message.chat.id, head+results)
           await asyncio.sleep(120)
-          try:
-              await asyncio.sleep(120)
-              await send_message_in_chunks.delete()
-              await mssg.delete()
+          await asyncio.sleep(120)
+          await send_message_in_chunks.delete()
+          await mssg.delete()
     except:
         pass
 
