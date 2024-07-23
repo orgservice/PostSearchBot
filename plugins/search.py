@@ -32,8 +32,10 @@ async def search(bot, message):
     channels = (await get_group(message.chat.id))["channels"]
     if bool(channels)==False:
        return     
+    if message.text.startswith("#"):
+       return 
     if message.text.startswith("/"):
-       return    
+       return 
     query   = message.text 
     head    = f"<b><u>⭕ Here is the results 👇</u></b>\n\n<blockquote><b>💢 Powered By @ORGPrime ❗</b></blockquote>\n\n"
     results = ""
@@ -54,8 +56,8 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
           msg = await send_message_in_chunks(bot, message.chat.id, head+results)
-       _time = (int(time()) + (2*60))
-       await save_dlt_message(msg, _time)
+          await asyncio.sleep(120)
+          await msg.delete()
     except:
        pass
 
