@@ -56,8 +56,12 @@ async def search(bot, message):
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
           msg = await message.reply_text(text=head+results, disable_web_page_preview=True)
-       _time = (int(time()) + (15*60))
-       await save_dlt_message(msg, _time)
+          asyncio.create_task(delete_after_delay(msg, 60))
+
+async def delete_after_delay(message: Message, delay):
+    await asyncio.sleep(delay)
+    try:
+        await message.delete()
     except:
        pass
 
@@ -72,7 +76,7 @@ async def recheck(bot, update):
     try:      
        typed = update.message.reply_to_message.from_user.id
     except:
-       return await update.message.delete(2)       
+       return await update.message.delete(30)       
     if clicked != typed:
        return await update.answer("That's not for you! 👀", show_alert=True)
 
@@ -82,7 +86,7 @@ async def recheck(bot, update):
     channels = (await get_group(update.message.chat.id))["channels"]
     head    = "<b><u>⭕ I Have Searched Movie With Wrong Spelling But Take Care Next Time 😐</u>\n\n<blockquote>💢 Powered By @ORGPrime ❗</b></blockquote>\n\n"
     results = ""
-    await update.message.delete()
+    await update.message.delete(60)
     try:
        for channel in channels:
            async for msg in User.search_messages(chat_id=channel, query=query):
