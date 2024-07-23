@@ -54,6 +54,8 @@ async def search(bot, message):
           msg = await message.reply_photo(photo="https://graph.org/file/e06089d66b2b556816e3d.jpg",
                                           caption="<b><I>🔺 I Couldn't find anything related to Your Query 😕\n\n🔻 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
+          await asyncio.sleep(60)
+          await msg.delete()
        else:
           await send_message_in_chunks(bot, message.chat.id, head+results)
     except:
@@ -70,7 +72,7 @@ async def recheck(bot, update):
     try:      
        typed = update.message.reply_to_message.from_user.id
     except:
-       return await update.message.delete(30)       
+       return await update.message.delete()       
     if clicked != typed:
        return await update.answer("That's not for you! 👀", show_alert=True)
 
@@ -80,7 +82,7 @@ async def recheck(bot, update):
     channels = (await get_group(update.message.chat.id))["channels"]
     head    = "<b><u>⭕ I Have Searched Movie With Wrong Spelling But Take Care Next Time 😐</u>\n\n<blockquote>💢 Powered By @ORGPrime ❗</b></blockquote>\n\n"
     results = ""
-    await update.message.delete(60)
+    await update.message.delete()
     try:
        for channel in channels:
            async for msg in User.search_messages(chat_id=channel, query=query):
