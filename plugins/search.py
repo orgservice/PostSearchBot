@@ -55,13 +55,7 @@ async def search(bot, message):
                                           caption="<b><I>🔺 I Couldn't find anything related to Your Query 😕\n\n🔻 Did you mean any of these?</I></b>", 
                                           reply_markup=InlineKeyboardMarkup(buttons))
        else:
-          msg = await message.reply_text(text=head+results, disable_web_page_preview=True)
-          asyncio.create_task(delete_after_delay(msg, 60))
-
-async def delete_after_delay(message: msg, delay):
-    await asyncio.sleep(delay)
-    try:
-        await message.delete()
+          await send_message_in_chunks(bot, message.chat.id, head+results)
     except:
        pass
 
