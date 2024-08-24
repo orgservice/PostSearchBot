@@ -39,6 +39,8 @@ async def search(bot, message):
     query   = message.text 
     head    = f"<b><u>⭕ Here is the results 👇</u></b>\n\n<blockquote><b>💢 Powered By @ORGPrime ❗</b></blockquote>\n\n"
     results = ""
+    await asyncio.sleep(30)
+    await query.delete()
     try:
        for channel in channels:
            async for msg in User.search_messages(chat_id=channel, query=query):
